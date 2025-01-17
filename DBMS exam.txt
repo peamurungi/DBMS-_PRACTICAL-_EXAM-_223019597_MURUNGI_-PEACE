@@ -351,13 +351,13 @@ mysql> SELECT First_Name, Last_Name, Department_Id FROM EMPLOYEES2 WHERE Departm
 mysql> CREATE TABLE Sales ( Sales_No INT PRIMARY KEY,Sales_name VARCHAR(50), Branch VARCHAR(50), Sales_amount DECIMAL(10,2),DOB DATE);
 Query OK, 0 rows affected (0.03 sec)
 
-mysql> INSERT INTO Sales VALUES (1, 'KEZA ALICE', 'North', 50000.00, DATE '1990-12-21');
+mysql> INSERT INTO Sales VALUES (1, 'John Smith ', 'North', 50000.00, DATE '1990-12-21');
 Query OK, 1 row affected (0.00 sec)
 
 mysql> INSERT INTO Sales VALUES (2, 'Mary Johnson', 'South', 45000.00, DATE '1985-06-15');
 Query OK, 1 row affected (0.00 sec)
 
-mysql> INSERT INTO Sales VALUES (3, 'David Liam', 'East', 55000.00, DATE '1988-12-09');
+mysql> INSERT INTO Sales VALUES (3, 'David Brown', 'East', 55000.00, DATE '1988-12-09');
 Query OK, 1 row affected (0.00 sec)
 
 mysql> INSERT INTO Sales VALUES (4, 'Sarah Wilson', 'West', 48000.00, DATE '1992-03-30');
