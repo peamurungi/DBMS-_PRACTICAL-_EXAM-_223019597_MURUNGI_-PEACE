@@ -1,0 +1,430 @@
+
+mysql> CREATE DATABASE CONSTRUCTION;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> USE CONSTRUCTION;
+Database changed
+mysql> CREATE TABLE Client_master ( Client_NO VARCHAR(10)PRIMARY KEY,    Name VARCHAR(50),    Address VARCHAR(100),    City VARCHAR(50),    State VARCHAR(50),    bal_due DECIMAL(10,2));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Client_master VALUES('C101', 'John Smith', '123 Main St', 'New York', 'NY', 6000.00),('C102', 'Sarah Johnson', '456 Oak Ave', 'Los Angeles', 'CA', 3500.00),('C123', 'Mike Wilson', '789 Pine Rd', 'Chicago', 'IL', 4800.00),('C104', 'Lisa Brown', '321 Elm St', 'Houston', 'TX', 5500.00),('C105', 'David Miller', '654 Maple Dr', 'Phoenix', 'AZ', 2800.00);
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE client_master;
++-----------+---------------+------+-----+---------+-------+
+| Field     | Type          | Null | Key | Default | Extra |
++-----------+---------------+------+-----+---------+-------+
+| Client_NO | varchar(10)   | NO   | PRI | NULL    |       |
+| Name      | varchar(50)   | YES  |     | NULL    |       |
+| Address   | varchar(100)  | YES  |     | NULL    |       |
+| City      | varchar(50)   | YES  |     | NULL    |       |
+| State     | varchar(50)   | YES  |     | NULL    |       |
+| bal_due   | decimal(10,2) | YES  |     | NULL    |       |
++-----------+---------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT *FROM client_master;
++-----------+---------------+--------------+-------------+-------+---------+
+| Client_NO | Name          | Address      | City        | State | bal_due |
++-----------+---------------+--------------+-------------+-------+---------+
+| C101      | John Smith    | 123 Main St  | New York    | NY    | 6000.00 |
+| C102      | Sarah Johnson | 456 Oak Ave  | Los Angeles | CA    | 3500.00 |
+| C123      | Mike Wilson   | 789 Pine Rd  | Chicago     | IL    | 4800.00 |
+| C104      | Lisa Brown    | 321 Elm St   | Houston     | TX    | 5500.00 |
+| C105      | David Miller  | 654 Maple Dr | Phoenix     | AZ    | 2800.00 |
++-----------+---------------+--------------+-------------+-------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT Name FROM Client_master WHERE bal_due > 5000;
++------------+
+| Name       |
++------------+
+| John Smith |
+| Lisa Brown |
++------------+
+2 rows in set (0.01 sec)
+
+
+mysql> ALTER TABLE Client_master RENAME TO Client12;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SELECT *FROM client12;
++-----------+---------------+--------------+-------------+-------+---------+
+| Client_NO | Name          | Address      | City        | State | bal_due |
++-----------+---------------+--------------+-------------+-------+---------+
+| C101      | John Smith    | 123 Main St  | New York    | NY    | 6000.00 |
+| C102      | Sarah Johnson | 456 Oak Ave  | Los Angeles | CA    | 3500.00 |
+| C123      | Mike Wilson   | 789 Pine Rd  | Chicago     | IL    | 4800.00 |
+| C104      | Lisa Brown    | 321 Elm St   | Houston     | TX    | 5500.00 |
+| C105      | David Miller  | 654 Maple Dr | Phoenix     | AZ    | 2800.00 |
++-----------+---------------+--------------+-------------+-------+---------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT Client_NO, Name, Address, City, State, bal_due AS "BALANCE"FROM Client12;
++-----------+---------------+--------------+-------------+-------+---------+
+| Client_NO | Name          | Address      | City        | State | BALANCE |
++-----------+---------------+--------------+-------------+-------+---------+
+| C101      | John Smith    | 123 Main St  | New York    | NY    | 6000.00 |
+| C102      | Sarah Johnson | 456 Oak Ave  | Los Angeles | CA    | 3500.00 |
+| C123      | Mike Wilson   | 789 Pine Rd  | Chicago     | IL    | 4800.00 |
+| C104      | Lisa Brown    | 321 Elm St   | Houston     | TX    | 5500.00 |
+| C105      | David Miller  | 654 Maple Dr | Phoenix     | AZ    | 2800.00 |
++-----------+---------------+--------------+-------------+-------+---------+
+5 rows in set (0.00 sec)
+
+          SECTION B 
+
+
+QUESTION 6:
+
+
+mysql> CREATE TABLE DEPARTMENTS ( DEPT_ID INT PRIMARY KEY,DEPT_NAME VARCHAR(50),LOCATION VARCHAR(50),MANAGER_ID INT,    BUDGET_NO INT,    ESTABLISHED_DATE DATE);
+Query OK, 0 rows affected (0.01 sec)
+at line 1
+mysql> CREATE TABLE EMPLOYEES ( EMP_ID INT PRIMARY KEY, FIRST_NAME VARCHAR(50), LAST_NAME VARCHAR(50), DEPT_ID INT, SALARY DECIMAL(10, 2),    HIRE_DATE DATE,    FOREIGN KEY (DEPT_ID) REFERENCES DEPARTMENTS(DEPT_ID));
+Query OK, 0 rows affected (0.02 sec)
+
+
+
+mysql> INSERT INTO DEPARTMENTS VALUES(10, 'Finance', 'New York', 101, 1000000, '01-JAN-2020'),(20, 'IT', 'San Francisco', 102, 1500000, '01-FEB-2020'),(30, 'Marketing', 'Chicago', 103, 800000, '01-MAR-2020'),(40, 'HR', 'Boston', 104, 500000, '01-APR-2020'),(50, 'Operations', 'Miami', 105, 1200000, '01-MAY-2020');
+Query OK, 5 rows affected, 5 warnings (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 5
+
+
+
+
+mysql> INSERT INTO EMPLOYEES VALUES(101, 'John', 'Smith', 10, 85000, '15-JAN-2020'),(102, 'Sarah', 'Johnson', 20, 95000, '15-FEB-2020'),(103, 'Michael', 'Brown', 30, 75000, '15-MAR-2020'),(104, 'Lisa', 'Davis', 40, 65000, '15-APR-2020'),(105, 'David', 'Wilson', 50, 80000, '15-MAY-2020');
+Query OK, 5 rows affected, 5 warnings (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 5
+
+
+
+mysql> SELECT *FROM DEPARTMENTS;
++---------+------------+---------------+------------+-----------+------------------+
+| DEPT_ID | DEPT_NAME  | LOCATION      | MANAGER_ID | BUDGET_NO | ESTABLISHED_DATE |
++---------+------------+---------------+------------+-----------+------------------+
+|      10 | Finance    | New York      |        101 |   1000000 | 0000-00-00       |
+|      20 | IT         | San Francisco |        102 |   1500000 | 0000-00-00       |
+|      30 | Marketing  | Chicago       |        103 |    800000 | 0000-00-00       |
+|      40 | HR         | Boston        |        104 |    500000 | 0000-00-00       |
+|      50 | Operations | Miami         |        105 |   1200000 | 0000-00-00       |
++---------+------------+---------------+------------+-----------+------------------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> SELECT *FROM EMPLOYEES;
++--------+------------+-----------+---------+----------+------------+
+| EMP_ID | FIRST_NAME | LAST_NAME | DEPT_ID | SALARY   | HIRE_DATE  |
++--------+------------+-----------+---------+----------+------------+
+|    101 | John       | Smith     |      10 | 85000.00 | 0000-00-00 |
+|    102 | Sarah      | Johnson   |      20 | 95000.00 | 0000-00-00 |
+|    103 | Michael    | Brown     |      30 | 75000.00 | 0000-00-00 |
+|    104 | Lisa       | Davis     |      40 | 65000.00 | 0000-00-00 |
+|    105 | David      | Wilson    |      50 | 80000.00 | 0000-00-00 |
++--------+------------+-----------+---------+----------+------------+
+5 rows in set (0.00 sec)
+
+B,
+
+
+mysql> SELECT * FROM EMPLOYEES;
++--------+------------+-----------+---------+----------+------------+
+| EMP_ID | FIRST_NAME | LAST_NAME | DEPT_ID | SALARY   | HIRE_DATE  |
++--------+------------+-----------+---------+----------+------------+
+|    101 | John       | Smith     |      10 | 85000.00 | 0000-00-00 |
+|    102 | Sarah      | Johnson   |      20 | 95000.00 | 0000-00-00 |
+|    103 | Michael    | Brown     |      30 | 75000.00 | 0000-00-00 |
+|    104 | Lisa       | Davis     |      40 | 65000.00 | 0000-00-00 |
+|    105 | David      | Wilson    |      50 | 80000.00 | 0000-00-00 |
++--------+------------+-----------+---------+----------+------------+
+5 rows in set (0.00 sec)
+
+C,
+
+mysql> SELECT EMPLOYEES.FIRST_NAME, EMPLOYEES.LAST_NAME, DEPARTMENTS.DEPT_NAME FROM EMPLOYEES LEFT OUTER JOIN DEPARTMENTS  ON EMPLOYEES.DEPT_ID = DEPARTMENTS.DEPT_ID;
++------------+-----------+------------+
+| FIRST_NAME | LAST_NAME | DEPT_NAME  |
++------------+-----------+------------+
+| John       | Smith     | Finance    |
+| Sarah      | Johnson   | IT         |
+| Michael    | Brown     | Marketing  |
+| Lisa       | Davis     | HR         |
+| David      | Wilson    | Operations |
++------------+-----------+------------+
+5 rows in set (0.01 sec)
+
+D,mysql> SELECT EMPLOYEES.FIRST_NAME, EMPLOYEES.LAST_NAME, DEPARTMENTS.DEPT_NAME FROM EMPLOYEES RIGHT OUTER JOIN DEPARTMENTS ON EMPLOYEES.DEPT_ID = DEPARTMENTS.DEPT_ID;
++------------+-----------+------------+
+| FIRST_NAME | LAST_NAME | DEPT_NAME  |
++------------+-----------+------------+
+| John       | Smith     | Finance    |
+| Sarah      | Johnson   | IT         |
+| Michael    | Brown     | Marketing  |
+| Lisa       | Davis     | HR         |
+| David      | Wilson    | Operations |
++------------+-----------+------------+
+5 rows in set (0.02 sec)
+
+E,mysql> SELECT * FROM EMPLOYEES WHERE SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES);
++--------+------------+-----------+---------+----------+------------+
+| EMP_ID | FIRST_NAME | LAST_NAME | DEPT_ID | SALARY   | HIRE_DATE  |
++--------+------------+-----------+---------+----------+------------+
+|    101 | John       | Smith     |      10 | 85000.00 | 0000-00-00 |
+|    102 | Sarah      | Johnson   |      20 | 95000.00 | 0000-00-00 |
++--------+------------+-----------+---------+----------+------------+
+2 rows in set (0.01 sec)
+
+
+
+7,
+
+
+mysql> CREATE TABLE STUDENT (student Id varchar(5),full names varchar(25),gender varchar(6),age int(2),department varchar(30));
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> CREATE VIEW all_students AS SELECT * FROM STUDENT;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE VIEW girls_list AS SELECT * FROM STUDENT WHERE gender = 'Female';
+Query OK, 0 rows affected (0.01 sec)
+
+
+mysql> CREATE VIEW Boys_list AS SELECT * FROM STUDENT WHERE gender = 'Male';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> INSERT INTO STUDENT VALUES('S001', 'John Smith', 'Male', 21, 'Computer Science'),('S002', 'Sarah Johnson', 'Female', 20, 'Engineering'),('S003', 'Michael Brown', 'Male', 19, 'Mathematics'),('S004', 'Emily Davis', 'Female', 22, 'Physics'),('S005', 'David Wilson', 'Male', 18, 'Chemistry');
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+
+mysql> select *from student;
++-----------+---------------+--------+------+------------------+
+| studentId | full names     | gender | age  | department       |
++-----------+---------------+--------+------+------------------+
+| S001      | John Smith    | Male   |   21 | Computer Science |
+| S002      | Sarah Johnson | Female |   20 | Engineering      |
+| S003      | Michael Brown | Male   |   19 | Mathematics      |
+| S004      | Emily Davis   | Female |   22 | Physics          |
+| S005      | David Wilson  | Male   |   18 | Chemistry        |
++-----------+---------------+--------+------+------------------+
+5 rows in set (0.00 sec)
+
+
+mysql> select *from boys_list;
++-----------+---------------+--------+------+------------------+
+| studentId | fullnames     | gender | age  | department       |
++-----------+---------------+--------+------+------------------+
+| S001      | John Smith    | Male   |   21 | Computer Science |
+| S003      | Michael Brown | Male   |   19 | Mathematics      |
+| S005      | David Wilson  | Male   |   18 | Chemistry        |
++-----------+---------------+--------+------+------------------+
+3 rows in set (0.01 sec)
+
+mysql> select *from girls_list;
++-----------+---------------+--------+------+-------------+
+| studentId | fullnames     | gender | age  | department  |
++-----------+---------------+--------+------+-------------+
+| S002      | Sarah Johnson | Female |   20 | Engineering |
+| S004      | Emily Davis   | Female |   22 | Physics     |
++-----------+---------------+--------+------+-------------+
+2 rows in set (0.00 sec)
+
+
+mysql> DELETE FROM STUDENT WHERE age < 20;
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> select *from student;
++-----------+---------------+--------+------+------------------+
+| studentId | fullnames     | gender | age  | department       |
++-----------+---------------+--------+------+------------------+
+| S001      | John Smith    | Male   |   21 | Computer Science |
+| S002      | Sarah Johnson | Female |   20 | Engineering      |
+| S004      | Emily Davis   | Female |   22 | Physics          |
++-----------+---------------+--------+------+------------------+
+3 rows in set (0.00 sec)
+ 
+
+
+       SECTION C
+QUESTION 9,
+
+mysql> CREATE TABLE EMPLOYEES2 (  Employee_Id INT PRIMARY KEY, First_Name VARCHAR(50),Last_Name VARCHAR(50),Email VARCHAR(100),Phone_NO VARCHAR(20),  Hire_Date DATE,Job_Id VARCHAR(10),Salary DECIMAL(8,2), Commission_Pct DECIMAL(2,2),  Manager_Id INT, Department_Id INT);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DESCRIBE EMPLOYEES2;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| Employee_Id    | int          | NO   | PRI | NULL    |       |
+| First_Name     | varchar(50)  | YES  |     | NULL    |       |
+| Last_Name      | varchar(50)  | YES  |     | NULL    |       |
+| Email          | varchar(100) | YES  |     | NULL    |       |
+| Phone_NO       | varchar(20)  | YES  |     | NULL    |       |
+| Hire_Date      | date         | YES  |     | NULL    |       |
+| Job_Id         | varchar(10)  | YES  |     | NULL    |       |
+| Salary         | decimal(8,2) | YES  |     | NULL    |       |
+| Commission_Pct | decimal(2,2) | YES  |     | NULL    |       |
+| Manager_Id     | int          | YES  |     | NULL    |       |
+| Department_Id  | int          | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+11 rows in set (0.01 sec)
+
+mysql> INSERT INTO EMPLOYEES2 VALUES (1, 'John', 'AUSTIN', 'john.austin@email.com', '515.123.4567', '2020-01-15', 'IT_PROG', 5000, NULL, 100, 60);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO EMPLOYEES2 VALUES(2, 'Sarah', 'KING', 'sarah.king@email.com', '515.123.4568', '2020-02-20', 'SA_REP', 4800, 0.15, 100, 80);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  INSERT INTO EMPLOYEES2 VALUES(3, 'Michael', 'AUSTIN', 'michael.austin@email.com', '515.123.4569', '2020-03-10', 'IT_PROG', 4500, NULL, 100, 60);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  INSERT INTO EMPLOYEES2 VALUES(4, 'Emily', 'BROWN', 'emily.brown@email.com', '515.123.4570', '2020-04-05', 'MK_REP', 4900, 0.10, 201, 70);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES2 VALUES (5, 'David', 'SMITH', 'david.smith@email.com', '515.123.4571', DATE '2020-05-15', 'SA_REP', 5200, 0.12, 100, 80);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT Employee_Id, First_Name, Last_Name, Salary FROM EMPLOYEES2;
++-------------+------------+-----------+---------+
+| Employee_Id | First_Name | Last_Name | Salary  |
++-------------+------------+-----------+---------+
+|           1 | John       | AUSTIN    | 5000.00 |
+|           2 | Sarah      | KING      | 4800.00 |
+|           3 | Michael    | AUSTIN    | 4500.00 |
+|           4 | Emily      | BROWN     | 4900.00 |
+|           5 | David      | SMITH     | 5200.00 |
++-------------+------------+-----------+---------+
+5 rows in set (0.00 sec)
+
+B,mysql> SELECT First_Name, Last_Name, Manager_Id FROM EMPLOYEES2 WHERE Manager_Id = 100;
++------------+-----------+------------+
+| First_Name | Last_Name | Manager_Id |
++------------+-----------+------------+
+| John       | AUSTIN    |        100 |
+| Sarah      | KING      |        100 |
+| Michael    | AUSTIN    |        100 |
+| David      | SMITH     |        100 |
++------------+-----------+------------+
+4 rows in set (0.00 sec)
+
+C,
+
+mysql> SELECT First_Name, Last_Name, Salary FROM EMPLOYEES2 WHERE Salary >= 4800;
++------------+-----------+---------+
+| First_Name | Last_Name | Salary  |
++------------+-----------+---------+
+| John       | AUSTIN    | 5000.00 |
+| Sarah      | KING      | 4800.00 |
+| Emily      | BROWN     | 4900.00 |
+| David      | SMITH     | 5200.00 |
++------------+-----------+---------+
+4 rows in set (0.00 sec)
+
+D,
+
+mysql> SELECT First_Name, Last_Name FROM EMPLOYEES2 WHERE Last_Name = 'AUSTIN';
++------------+-----------+
+| First_Name | Last_Name |
++------------+-----------+
+| John       | AUSTIN    |
+| Michael    | AUSTIN    |
++------------+-----------+
+2 rows in set (0.00 sec)
+
+E,
+mysql> SELECT First_Name, Last_Name, Department_Id FROM EMPLOYEES2 WHERE Department_Id IN (60, 70, 80)ORDER BY Department_Id;
++------------+-----------+---------------+
+| First_Name | Last_Name | Department_Id |
++------------+-----------+---------------+
+| John       | AUSTIN    |            60 |
+| Michael    | AUSTIN    |            60 |
+| Emily      | BROWN     |            70 |
+| Sarah      | KING      |            80 |
+| David      | SMITH     |            80 |
++------------+-----------+---------------+
+    
+
+      QUESTION 10,
+
+mysql> CREATE TABLE Sales ( Sales_No INT PRIMARY KEY,Sales_name VARCHAR(50), Branch VARCHAR(50), Sales_amount DECIMAL(10,2),DOB DATE);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Sales VALUES (1, 'John Smith', 'North', 50000.00, DATE '1990-12-21');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Sales VALUES (2, 'Mary Johnson', 'South', 45000.00, DATE '1985-06-15');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Sales VALUES (3, 'David Brown', 'East', 55000.00, DATE '1988-12-09');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Sales VALUES (4, 'Sarah Wilson', 'West', 48000.00, DATE '1992-03-30');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Sales VALUES (5, 'Michael Davis', 'North', 52000.00, DATE '1987-12-05');
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> SELECT*FROM SALES;
++----------+---------------+--------+--------------+------------+
+| Sales_No | Sales_name    | Branch | Sales_amount | DOB        |
++----------+---------------+--------+--------------+------------+
+|        1 | John Smith    | North  |     50000.00 | 1990-12-21 |
+|        2 | Mary Johnson  | South  |     45000.00 | 1985-06-15 |
+|        3 | David Brown   | East   |     55000.00 | 1988-12-09 |
+|        4 | Sarah Wilson  | West   |     48000.00 | 1992-03-30 |
+|        5 | Michael Davis | North  |     52000.00 | 1987-12-05 |
++----------+---------------+--------+--------------+------------+
+5 rows in set (0.00 sec)
+
+b,
+mysql> SELECT Branch, SUM(Sales_amount) as Total_Sales FROM Sales GROUP BY Branch;
++--------+-------------+
+| Branch | Total_Sales |
++--------+-------------+
+| North  |   102000.00 |
+| South  |    45000.00 |
+| East   |    55000.00 |
+| West   |    48000.00 |
++--------+-------------+
+4 rows in set (0.00 sec)
+
+c
+
+mysql> SELECT Branch, AVG(Sales_amount) as Average_Sales FROM Sales GROUP BY Branch;
++--------+---------------+
+| Branch | Average_Sales |
++--------+---------------+
+| North  |  51000.000000 |
+| South  |  45000.000000 |
+| East   |  55000.000000 |
+| West   |  48000.000000 |
++--------+---------------+
+4 rows in set (0.02 sec)
+
+d
+mysql> SELECT Sales_name,    DATE_FORMAT(DOB, '%d-%b-%y') as Formatted_DOB FROM Sales WHERE MONTH(DOB) = 12;
++---------------+---------------+
+| Sales_name    | Formatted_DOB |
++---------------+---------------+
+| John Smith    | 21-Dec-90     |
+| David Brown   | 09-Dec-88     |
+| Michael Davis | 05-Dec-87     |
++---------------+---------------+
+3 rows in set (0.02 sec)
+
+e,
+
+mysql> SELECT Sales_name FROM Sales ORDER BY EXTRACT(MONTH FROM DOB), Sales_name;
++---------------+
+| Sales_name    |
++---------------+
+| Sarah Wilson  |
+| Mary Johnson  |
+| David Brown   |
+| John Smith    |
+| Michael Davis |
++---------------+
+5 rows in set (0.01 sec)
